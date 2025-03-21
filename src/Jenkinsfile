@@ -1,23 +1,20 @@
-stage('Pruebas') {
+pipeline {
+    agent any
+    tools {
+        maven 'Maven'
+        jdk ‘jdk-17'
+    }
+    stages {
+        stage('Clonar código') {
             steps {
-                bat 'mvn test'
+                git url: 'https://github.com/William123706/java-jenkins-ci-example.git', branch: 'main'
             }
         }
-        stage('Empaquetar') {
+        stage('Compilar') {
             steps {
-                bat 'mvn package'
+                bat 'mvn clean compile'
             }
         }
-    }
-    post {
-        success {
-            echo 'La compilacion y las pruebas fueron exitosas.'
-        }
-        failure {
-            echo 'Hubo errores en la compilacion o en las pruebas.'
-        }
-    }
-}
 stage('Pruebas') {
             steps {
                 bat 'mvn test'
